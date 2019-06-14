@@ -1,0 +1,16 @@
+{
+    "name": "thizer/soundboard",
+    "description": "Buttons to play sounds quickly",
+    "type": "project",
+    "require": {
+        "braghim-sistemas/suitup-php": "dev-master"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Thizer",
+            "email": "thizerdev@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}

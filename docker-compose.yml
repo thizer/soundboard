@@ -1,0 +1,22 @@
+version: "3"
+services:
+  # https://dockerfile.readthedocs.io/en/latest/content/DockerImages/dockerfiles/php-apache.html
+  servidor:
+    image: webdevops/php-apache:7.2
+    container_name: soundboard-apache
+    build:
+      context: ./docker
+    ports:
+      - "8080:80"
+      # - "443:443"
+    volumes:
+      - ".:/app"
+      - "./docker/php.ini:/usr/local/etc/php/php.ini"
+      - "./docker/vhost.conf:/opt/docker/etc/httpd/vhost.conf"
+    environment:
+      - "PHP_MEMORY_LIMIT=128M"
+      - "PHP_UPLOAD_MAX_FILESIZE=64M"
+      - "PHP_POST_MAX_SIZE=64M"
+      - "PHP_DISMOD=ioncube,redis"
+volumes:
+  data:
