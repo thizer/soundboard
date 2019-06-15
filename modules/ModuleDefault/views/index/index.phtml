@@ -3,17 +3,64 @@
   .btn { min-height: 100px; }
 </style>
 
+<script>
+  function playSound(idEl) {
+    var element = document.getElementById('item-'+idEl);
+    var intervPlaying = null;
+
+    function stop() {
+      element.pause();
+      element.currentTime = 0;
+
+      if (intervPlaying !== null) {
+        clearInterval(intervPlaying);
+      }
+
+      // Natural color button
+      $('#btn-'+idEl).addClass('btn-primary').removeClass('btn-warning');
+    }
+
+    if (element.currentTime > 0) {
+      stop();
+    } else {
+
+      // play song
+      element.play();
+
+      // Change color of button
+      $('#btn-'+idEl).removeClass('btn-primary').addClass('btn-warning');
+
+      // Check by an interval of 0,3 seconds if audio is already stoped
+      intervPlaying = setInterval(function() {
+        if (element.currentTime === element.duration) {
+          stop();
+          clearInterval(intervPlaying);
+        } else {
+
+          // if ($('#btn-'+idEl).hasClass('btn-primary')) {
+          //   $('#btn-'+idEl).removeClass('btn-primary').addClass('btn-warning');
+          // } else {
+          //   $('#btn-'+idEl).addClass('btn-primary').removeClass('btn-warning');
+          // }
+
+        }
+      }, 300);
+
+    }
+  }
+</script>
+
 <div class="row">
   <?php $i=0;?>
   <?php foreach ($sounds as $theme => $files): ?>
     <div class="col-12">
-      <h3><?php echo $theme; ?></h3>
+      <h3 class="mt-3"><?php echo $theme; ?></h3>
     </div>
 
     <?php foreach($files as $filename): $i++ ?>
       <div class="col-2 mt-2">
-        <button type="button" class="btn btn-primary btn-block" onclick="document.getElementById('item-<?php echo $i; ?>').play();">
-          <?php echo preg_replace('/.+\//', '', $filename); ?>
+        <button type="button" class="btn btn-primary btn-block" id="btn-<?php echo $i; ?>" onclick="playSound('<?php echo $i; ?>');" style="white-space: normal;">
+          <?php echo preg_replace(array('/.+\//', '/\-/'), array('', ' '), $filename); ?>
         </button>
 
         <audio src="<?php echo $this->baseUrl($soundsPath.$filename); ?>" id="item-<?php echo $i; ?>">
