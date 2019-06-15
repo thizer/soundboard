@@ -1,15 +1,26 @@
 <style>
-  .btn { min-height: 150px; }
+  body { min-height: 1200px; }
+  .btn { min-height: 100px; }
 </style>
 
 <div class="row">
-  <div class="col-12">
-    <h3>Theme</h3>
-  </div>
-  <div class="col-4">
-    <button type="button" class="btn btn-primary btn-block">
-      Nome da faixa
-    </button>
-  </div>
+  <?php $i=0;?>
+  <?php foreach ($sounds as $theme => $files): ?>
+    <div class="col-12">
+      <h3><?php echo $theme; ?></h3>
+    </div>
+
+    <?php foreach($files as $filename): $i++ ?>
+      <div class="col-2 mt-2">
+        <button type="button" class="btn btn-primary btn-block" onclick="document.getElementById('item-<?php echo $i; ?>').play();">
+          <?php echo preg_replace('/.+\//', '', $filename); ?>
+        </button>
+
+        <audio src="<?php echo $this->baseUrl($soundsPath.$filename); ?>" id="item-<?php echo $i; ?>">
+            Your browser does not support the HTML5 Audio element.
+        </audio>
+      </div>
+    <?php endforeach; ?>
+  <?php endforeach; ?>
 </div>
 
