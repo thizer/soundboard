@@ -58,15 +58,29 @@
 </script>
 
 <div class="row">
-  <?php $i=0;?>
+  <?php
+    $i=0;
+    $indexColor = 0;
+    $colors = [
+      'btn-outline-primary rounded rounded-circle',
+      'btn-outline-secondary rounded-circle',
+      'btn-outline-success rounded-circle',
+      'btn-outline-danger rounded-circle',
+      'btn-outline-info rounded-circle',
+      'btn-outline-dark rounded-circle'
+    ];
+  ?>
   <?php foreach ($sounds as $theme => $files): ?>
-    <div class="col-12">
+    <!-- <div class="col-12">
       <h3 class="mt-3"><?php echo $theme; ?></h3>
-    </div>
+    </div> -->
 
-    <?php foreach($files as $filename): $i++ ?>
+    <?php if ($indexColor >= count($colors)) $indexColor=0; ?>
+
+    <?php foreach($files as $filename): $i++; ?>
+
       <div class="col-2 mt-2">
-        <button type="button" class="btn btn-primary btn-block" id="btn-<?php echo $i; ?>" onclick="playSound('<?php echo $i; ?>');" style="white-space: normal;" data-state="stoped">
+        <button type="button" class="btn btn-block <?php echo $colors[$indexColor]; ?>" id="btn-<?php echo $i; ?>" onclick="playSound('<?php echo $i; ?>');" style="white-space: normal;" data-state="stoped">
           <?php echo preg_replace(array('/.+\//', '/\-/'), array('', ' '), $filename); ?>
         </button>
 
@@ -75,6 +89,6 @@
         </audio>
       </div>
     <?php endforeach; ?>
-  <?php endforeach; ?>
+  <?php $indexColor++; endforeach; ?>
 </div>
 

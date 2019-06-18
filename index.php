@@ -17,7 +17,7 @@ if (SHOW_ERRORS) {
 chdir(__DIR__);
 
 // Simple functions you should implement
-// include_once './functions.php';
+include_once './functions.php';
 
 // Setup autoloading composer
 if (file_exists('vendor/autoload.php')) {
