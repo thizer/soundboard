@@ -28,7 +28,7 @@
       }
     }
 
-    var bgNotOutline = bgOutlineClass.replace('-outline', '');
+    var bgNotOutline = (bgOutlineClass !== null) ? bgOutlineClass.replace('-outline', '') : null;
 
     if ($('#btn-'+idEl).data('state') === 'stoped') {
 
@@ -88,7 +88,7 @@
 
     <?php foreach($files as $filename): $i++; ?>
 
-      <div class="col-2 mt-2">
+      <div class="col-6 col-sm-4 col-md-3 col-lg-2 mt-2">
         <button type="button" class="btn btn-sound btn-block <?php echo $colors[$indexColor]; ?>" id="btn-<?php echo $i; ?>" onclick="playSound('<?php echo $i; ?>');" style="white-space: normal;" data-state="stoped">
           <?php echo preg_replace(array('/.+\//', '/\-/'), array('', ' '), $filename); ?>
         </button>
