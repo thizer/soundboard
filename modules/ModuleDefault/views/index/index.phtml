@@ -1,9 +1,9 @@
 <style>
   body { min-height: 1200px; }
-  .btn { min-height: 100px; }
+  .btn-sound { min-height: 100px; }
 </style>
 
-<script>
+<script type="text/javascript">
 
   function myRound(num, precision) {
     if (num === null) {
@@ -21,6 +21,15 @@
     var element = document.getElementById('item-'+idEl);
     element.volume = 1; // Volume 100%
 
+    var bgOutlineClass = null;
+    for (var className of $('#btn-'+idEl).attr('class').split(' ')) {
+      if (className.indexOf('outline') !== -1) {
+        bgOutlineClass = className;
+      }
+    }
+
+    var bgNotOutline = bgOutlineClass.replace('-outline', '');
+
     if ($('#btn-'+idEl).data('state') === 'stoped') {
 
       $('#btn-'+idEl).data('state', 'playing');
@@ -35,17 +44,17 @@
 //          element.pause();
 
           $('#btn-'+idEl).data('state', 'stoped');
-          $('#btn-'+idEl).addClass('btn-primary').removeClass('btn-warning');
+          $('#btn-'+idEl).addClass(bgOutlineClass).removeClass(bgNotOutline);
 
           clearInterval(playing);
 
         } else {
 
           // Blink button
-          if ($('#btn-'+idEl).hasClass('btn-primary')) {
-            $('#btn-'+idEl).removeClass('btn-primary').addClass('btn-warning');
+          if ($('#btn-'+idEl).hasClass(bgOutlineClass)) {
+            $('#btn-'+idEl).removeClass(bgOutlineClass).addClass(bgNotOutline);
           } else {
-            $('#btn-'+idEl).addClass('btn-primary').removeClass('btn-warning');
+            $('#btn-'+idEl).addClass(bgOutlineClass).removeClass(bgNotOutline);
           }
         }
 
@@ -80,7 +89,7 @@
     <?php foreach($files as $filename): $i++; ?>
 
       <div class="col-2 mt-2">
-        <button type="button" class="btn btn-block <?php echo $colors[$indexColor]; ?>" id="btn-<?php echo $i; ?>" onclick="playSound('<?php echo $i; ?>');" style="white-space: normal;" data-state="stoped">
+        <button type="button" class="btn btn-sound btn-block <?php echo $colors[$indexColor]; ?>" id="btn-<?php echo $i; ?>" onclick="playSound('<?php echo $i; ?>');" style="white-space: normal;" data-state="stoped">
           <?php echo preg_replace(array('/.+\//', '/\-/'), array('', ' '), $filename); ?>
         </button>
 
