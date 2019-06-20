@@ -1,102 +1,58 @@
 <style>
   body { min-height: 1200px; }
-  .btn-sound { min-height: 100px; }
+  
+  .fav-item {
+    margin-bottom: 7px;
+    text-align: center;
+  }
+  
+  .btn-sound {
+    white-space: normal;
+    /*
+    height: 70px;
+    width: 70px;
+    */
+  }
+  
 </style>
 
-<script type="text/javascript">
+<script type="text/javascript" src="<?php echo $this->baseUrl('/assets/js/play-button.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->baseUrl('/assets/js/player-control.js'); ?>"></script>
 
-  function myRound(num, precision) {
-    if (num === null) {
-      throw "Esperado num";
-    }
+<?php
+  $i=0;
+  $indexColor = 0;
+  $colors = [
+    'btn-outline-primary rounded rounded-circle',
+    'btn-outline-secondary rounded-circle',
+    'btn-outline-success rounded-circle',
+    'btn-outline-danger rounded-circle',
+    'btn-outline-info rounded-circle',
+    'btn-outline-dark rounded-circle'
+  ];
+?>
 
-    if (precision === null) {
-      precision = 2;
-    }
-
-    return parseFloat((num).toPrecision(precision));
-  }
-
-  function playSound(idEl) {
-    var element = document.getElementById('item-'+idEl);
-    element.volume = 1; // Volume 100%
-
-    var bgOutlineClass = null;
-    for (var className of $('#btn-'+idEl).attr('class').split(' ')) {
-      if (className.indexOf('outline') !== -1) {
-        bgOutlineClass = className;
-      }
-    }
-
-    var bgNotOutline = (bgOutlineClass !== null) ? bgOutlineClass.replace('-outline', '') : null;
-
-    if ($('#btn-'+idEl).data('state') === 'stoped') {
-
-      $('#btn-'+idEl).data('state', 'playing');
-      element.currentTime = 0;
-      element.play();
-
-      var playing = setInterval(function() {
-
-        if (myRound(element.currentTime) === myRound(element.duration)) {
-
-          element.load();
-//          element.pause();
-
-          $('#btn-'+idEl).data('state', 'stoped');
-          $('#btn-'+idEl).addClass(bgOutlineClass).removeClass(bgNotOutline);
-
-          clearInterval(playing);
-
-        } else {
-
-          // Blink button
-          if ($('#btn-'+idEl).hasClass(bgOutlineClass)) {
-            $('#btn-'+idEl).removeClass(bgOutlineClass).addClass(bgNotOutline);
-          } else {
-            $('#btn-'+idEl).addClass(bgOutlineClass).removeClass(bgNotOutline);
-          }
-        }
-
-      }, 300);
-    } else {
-      element.currentTime = element.duration;
-    }
-
-  }
-</script>
-
-<div class="row">
-  <?php
-    $i=0;
-    $indexColor = 0;
-    $colors = [
-      'btn-outline-primary rounded rounded-circle',
-      'btn-outline-secondary rounded-circle',
-      'btn-outline-success rounded-circle',
-      'btn-outline-danger rounded-circle',
-      'btn-outline-info rounded-circle',
-      'btn-outline-dark rounded-circle'
-    ];
-  ?>
+<h2>Favorites</h2>
+<div class="d-flex justify-content-between flex-wrap" id="favorites">
+  <?php for ($i; $i<90; $i++): ?>
+    <div class="border rounded fav-item"></div>
+  <?php endfor; ?>
+</div>
+<hr/>
+<div class="d-flex justify-content-between flex-wrap">
   <?php foreach ($sounds as $theme => $files): ?>
-    <!-- <div class="col-12">
-      <h3 class="mt-3"><?php echo $theme; ?></h3>
-    </div> -->
-
     <?php if ($indexColor >= count($colors)) $indexColor=0; ?>
-
     <?php foreach($files as $filename): $i++; ?>
 
-      <div class="col-6 col-sm-4 col-md-3 col-lg-2 mt-2">
-        <button type="button" class="btn btn-sound btn-block <?php echo $colors[$indexColor]; ?>" id="btn-<?php echo $i; ?>" onclick="playSound('<?php echo $i; ?>');" style="white-space: normal;" data-state="stoped">
-          <?php echo preg_replace(array('/.+\//', '/\-/'), array('', ' '), $filename); ?>
-        </button>
+      <button type="button" class="m-2 btn btn-sound <?php echo $colors[$indexColor]; ?>" id="btn-<?php echo $i; ?>" onclick="playSound('<?php echo $i; ?>');" data-state="stoped" data-toggle="tooltip" title="<?php echo preg_replace(array('/.+\//', '/\-/'), array('', ' '), $filename); ?>">
+        <?php //echo preg_replace(array('/.+\//', '/\-/'), array('', ' '), $filename); ?>
+        <i class="fas fa-eject fa-rotate-90"></i>
+      </button>
 
-        <audio src="<?php echo $this->baseUrl($soundsPath.$filename); ?>" id="item-<?php echo $i; ?>">
-            Your browser does not support the HTML5 Audio element.
-        </audio>
-      </div>
+      <audio src="<?php echo $this->baseUrl($soundsPath.$filename); ?>" id="item-<?php echo $i; ?>">
+          Your browser does not support the HTML5 Audio element.
+      </audio>
+
     <?php endforeach; ?>
   <?php $indexColor++; endforeach; ?>
 </div>
