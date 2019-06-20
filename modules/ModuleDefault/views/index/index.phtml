@@ -35,7 +35,7 @@
 <h2>Favorites</h2>
 <div class="d-flex justify-content-between flex-wrap" id="favorites">
   <?php for ($i; $i<90; $i++): ?>
-    <div class="border rounded fav-item"></div>
+    <div class="border rounded fav-item" id="fav-<?php echo $i; ?>" ondragover="console.log(event.target);"></div>
   <?php endfor; ?>
 </div>
 <hr/>
@@ -44,7 +44,7 @@
     <?php if ($indexColor >= count($colors)) $indexColor=0; ?>
     <?php foreach($files as $filename): $i++; ?>
 
-      <button type="button" class="m-2 btn btn-sound <?php echo $colors[$indexColor]; ?>" id="btn-<?php echo $i; ?>" onclick="playSound('<?php echo $i; ?>');" data-state="stoped" data-toggle="tooltip" title="<?php echo preg_replace(array('/.+\//', '/\-/'), array('', ' '), $filename); ?>">
+      <button type="button" class="m-2 btn btn-sound <?php echo $colors[$indexColor]; ?>" id="btn-<?php echo $i; ?>" onclick="playSound('<?php echo $i; ?>');" data-state="stoped" data-toggle="tooltip" title="<?php echo preg_replace(array('/.+\//', '/\-/'), array('', ' '), $filename); ?>" draggable="true">
         <?php //echo preg_replace(array('/.+\//', '/\-/'), array('', ' '), $filename); ?>
         <i class="fas fa-eject fa-rotate-90"></i>
       </button>
