@@ -1,9 +1,9 @@
 $(function() {
 
   $(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-  })
-  
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+
 });
 
 function myRound(num, precision) {

@@ -1,0 +1,19 @@
+
+body {
+  color: #FBFBFF;
+  min-height: 1200px;
+  background-color: #2A2D34
+}
+
+.fav-item {
+  margin-bottom: 7px;
+  text-align: center;
+}
+
+.btn-sound {
+  white-space: normal;
+  /*
+  height: 70px;
+  width: 70px;
+  */
+}

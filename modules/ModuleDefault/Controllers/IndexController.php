@@ -4,7 +4,7 @@ namespace ModuleDefault\Controllers;
 class IndexController extends AbstractController
 {
   public function indexAction() {
-    
+
     $soundsPath = 'assets/sounds/';
     $sounds = array();
 
@@ -27,6 +27,10 @@ class IndexController extends AbstractController
     $this->addViewVar('sounds', $sounds);
     $this->addViewVar('soundsPath', $soundsPath);
 
+  }
+
+  public function newSoundAction() {
+    dump($_FILES);
   }
 }
 
